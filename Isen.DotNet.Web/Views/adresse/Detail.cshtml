@@ -1,0 +1,83 @@
+@using Isen.DotNet.Library.Models.Implementation;
+@using Isen.DotNet.Library.Repositories.Interfaces;
+@{
+    ViewData["Title"] = "Adresse (détail)";
+}
+@inject ICommuneRepository _communeRepository;
+@model adresse;
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Détail d'une Adresse <small>/Adresse/detail</small></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form" asp-action="Detail">
+
+            <input type="hidden" 
+                value="@Model?.Id" asp-for="Id" />
+
+            <div>
+                <label for="LigneDeTexte" class="control-label">
+                    Ligne De Texte :
+                </label>
+                <input type="text" class="form-control"
+                    id="LigneDeTexte" placeholder="Ligne de Texte"
+                    value="@Model?.LigneDeTexte" asp-for="LigneDeTexte" />
+            </div>
+
+            <div>
+                <label for="CodePostal" class="control-label">
+                    Code Postal  :
+                </label>
+                <input type="text" class="form-control"
+                    id="CodePostal" placeholder="Code Postal"
+                    value="@Model?.CodePostal" asp-for="CodePostal" />
+            </div>
+
+            <div>
+                <label for="CommuneId">Commune</label>
+                @Html.DropDownListFor(
+                    p => p.CommuneId,
+                    new SelectList(
+                        _communeRepository.GetAll(),
+                        "Id",
+                        "Name"
+                    ),
+                    "<Sélectionez une commune>",
+                        new {@class = "form-control"}
+                )
+            </div>
+            <div>
+                <label for="Latitude" class="control-label">
+                    Latitude :
+                </label>
+                <input type="text" class="form-control"
+                    id="Latitude" placeholder="Latitude"
+                    value="@Model?.Latitude" asp-for="Latitude" />
+            </div>
+
+            <div>
+                <label for="Longitude" class="control-label">
+                    Latitude :
+                </label>
+                <input type="text" class="form-control"
+                    id="Longitude" placeholder="Longitude"
+                    value="@Model?.Longitude" asp-for="Longitude" />
+            </div>
+            
+            
+
+            
+
+
+            <br />
+
+            <input type="submit" class="btn btn-primary"
+                value="Valider" />
+            <a class="btn btn-default" 
+                asp-controller="Person" asp-action="Index">Annuler</a>
+        </form>
+    </div>
+</div> 

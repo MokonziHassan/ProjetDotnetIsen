@@ -1,0 +1,49 @@
+@using Isen.DotNet.Library.Models.Implementation;
+@{
+    ViewData["Title"] = "Catégories";
+}
+@model IEnumerable<categorie>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Catégories <small>/Categorie/index</small></h1>
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-default" 
+        asp-controller="Categorie" asp-action="Detail">Ajouter une catégorie...</a>
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Descriptif</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var cat in Model)
+            {
+            <tr>
+                <td>@cat.Id</td>
+                <td>@cat.Name</td>
+                <td>@cat.Descriptif</td>
+                
+                <td>
+                    <a class="btn btn-default" 
+                        asp-controller="Categorie" 
+                        asp-action="Detail" 
+                        asp-route-id="@cat.Id">Editer</a>
+                    &nbsp;
+                    <a class="btn btn-danger" 
+                        asp-controller="Categorie" 
+                        asp-action="Delete" 
+                        asp-route-id="@cat.Id">Supprimer</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

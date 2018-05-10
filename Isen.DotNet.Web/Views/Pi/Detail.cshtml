@@ -1,0 +1,63 @@
+@using Isen.DotNet.Library.Models.Implementation;
+@using Isen.DotNet.Library.Repositories.Interfaces;
+@{
+    ViewData["Title"] = "PointDInteret (détail)";
+}
+@inject IAdresseRepository _adresseRepository;
+@inject ICategorieRepository _categorieRepository;
+@model pointDinteret
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Home <small>/PointDInteret/detail</small></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" asp-action="Detail">
+            <input type="hidden" value="@Model?.Id" asp-for="Id" />
+            <div>
+                <label for="Name" class="control-label">Nom du point d'Interet :</label>
+                <input type="text" class="form-control"
+                    id="Name" placeholder="Nom du point d'intérêt"
+                    value="@Model?.Name" asp-for="Name" />
+            </div>
+            <div>
+                <label for="Name" class="control-label">Descriptif du point d'Interet :</label>
+                <input type="text" class="form-control"
+                    id="Descriptif" placeholder="Descriptif du point d'intérêt"
+                    value="@Model?.Descriptif" asp-for="Descriptif" />
+            </div>
+            <div>
+                <label for="CategorieId">Categorie</label>
+                @Html.DropDownListFor(
+                    p=> p.CategorieId,
+                    new SelectList(
+                        _categorieRepository.GetAll(),
+                        "Id",
+                        "Name"
+                    ),
+                    "<Selectionnez une vile>",
+                        new {@class = "form-control"}
+                )
+            </div>
+            <div>
+                <label for="AdresseId">Adresse</label>
+                @Html.DropDownListFor(
+                    p => p.AdresseId,
+                    new SelectList(
+                        _adresseRepository.GetAll(),
+                        "Id",
+                        "LigneDeTexte"
+                    ),
+                    "<Sélectionez une adresse>",
+                        new {@class = "form-control"}
+                )
+            </div>
+            <br />
+            <input type="submit" class="btn btn-primary" value="Valider" />
+            <a class="btn btn-default" 
+                asp-controller="PointDInteret" asp-action="Index">Annuler</a>
+        </form>
+    </div>
+</div>

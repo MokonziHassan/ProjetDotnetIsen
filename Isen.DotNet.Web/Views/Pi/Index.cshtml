@@ -1,0 +1,49 @@
+﻿@using Isen.DotNet.Library.Models.Implementation;
+@{
+    ViewData["Title"] = "Points d'Intérêts";
+}
+@model IEnumerable<pointDinteret>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Points D'Interets <small>/Point D'Interet/index</small></h1>
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-default" 
+        asp-controller="Pi" asp-action="Detail">Ajouter un point d'Intérêt...</a>
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Descriptif</th>
+                <th>Categorie</th>
+                <th>Adresse</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var pi in Model)
+            {
+            <tr>
+                <td>@pi.Id</td>
+                <td>@pi.Name</td>
+                <td>@pi.Descriptif</td>
+                <td>@pi.Categorie?.Name</td>
+                <td>@pi.Adresse?.LigneDeTexte</td>
+                <td>
+                    <a class="btn btn-default" 
+                        asp-controller="Pi" 
+                        asp-action="Detail" 
+                        asp-route-id="@pi.Id">Editer</a>
+                    &nbsp;
+                    <a class="btn btn-danger" asp-controller="Pi" asp-action="Delete" asp-route-id="@pi.Id">Supprimer</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
