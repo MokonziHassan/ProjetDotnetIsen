@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Isen.DotNet.Library.Models.Implementation;
 using Isen.DotNet.Library.Repositories.Interfaces;
 using Isen.DotNet.Library.Utilities;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
 using System.IO;
-using System.Data;
-using System.Web;
-using System.Text;
 using CsvHelper;
-using System.Configuration;
+
 
 namespace Isen.DotNet.Library.Data
 {
@@ -97,29 +92,28 @@ namespace Isen.DotNet.Library.Data
             if (_communeRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Commune");
 
-            var commune = new List<commune>
+            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\commune.csv";
+            using (var sr = new StreamReader(path) ) 
             {
-                new commune
+                var reader = new CsvReader(sr);
+                try {
+                    reader.Configuration.MissingFieldFound = null;
+                    reader.Configuration.RegisterClassMap<CommuneMap>();
+                    reader.Read();
+                    reader.ReadHeader();
+                    IEnumerable<commune> communes = reader.GetRecords<commune>();
+
+                _communeRepository.UpdateRange(communes);
+                _communeRepository.Save();
+                }catch(System.Exception e)
                 {
-                    Name = "John",
-                    Latitude = 45,
-                    Longitude = 47
-                },
-                new commune
-                {
-                    Name = "John",
-                    Latitude = 45,
-                    Longitude = 47
-                },
-                new commune
-                {
-                    Name = "John",
-                    Latitude = 45,
-                    Longitude = 47
+                    throw e;
+                    
                 }
-            };
-            _communeRepository.UpdateRange(commune);
-            _communeRepository.Save();
+                
+            
+            }
+            
 
             _logger.LogWarning("Added commune");
         }
@@ -129,21 +123,19 @@ namespace Isen.DotNet.Library.Data
             if (_categorieRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Categories");
 
-            var categorie = new List<categorie>
+            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\Categorie.csv";
+            using (var sr = new StreamReader(path) ) 
             {
-                new categorie 
-                {
-                    Name = "Hotellerie",
-                    Descriptif = "Lieu d'hébergement"
-                },
-                new categorie
-                {
-                    Name = "Restauration",
-                    Descriptif = "Lieu où on peut se nourrir"
-                }
-            };
-            _categorieRepository.UpdateRange(categorie);
-            _categorieRepository.Save();
+                var reader = new CsvReader(sr);
+                reader.Configuration.MissingFieldFound = null;
+                reader.Configuration.RegisterClassMap<CategorieMap>();
+                reader.Read();
+                reader.ReadHeader();
+                IEnumerable<categorie> categories = reader.GetRecords<categorie>();
+
+                _categorieRepository.UpdateRange(categories);
+                _categorieRepository.Save();
+            }
 
             _logger.LogWarning("Added categorie");
         }
@@ -152,24 +144,19 @@ namespace Isen.DotNet.Library.Data
         {
             if (_adresseRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Adresses");
-            var adresse = new List<adresse>
+            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\departementCommune.csv";
+            using (var sr = new StreamReader(path) ) 
             {
-                new adresse
-                    {
-                    Id=1, 
-                    LigneDeTexte="282 Boulevard Léon Bourgois", 
-                    CodePostal = 83100
-                    
-                    
-                    },
-                    new adresse
-                    {
-                        Id = 2,
-                        LigneDeTexte = "Maison du Numérique et de l'Innovation, Place Georges Pompidou",
-                        CodePostal = 83000
-                    
-                    }
-            }; 
+                var reader = new CsvReader(sr);
+                reader.Configuration.MissingFieldFound = null;
+                reader.Configuration.RegisterClassMap<AdresseMap>();
+                reader.Read();
+                reader.ReadHeader();
+                IEnumerable<adresse> adresses = reader.GetRecords<adresse>();
+
+                _adresseRepository.UpdateRange(adresses);
+                _adresseRepository.Save();
+            }
             
         }
     }
