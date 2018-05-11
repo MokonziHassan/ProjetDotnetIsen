@@ -28,7 +28,7 @@ namespace Isen.DotNet.Web
                 seed.CreateDatabase();
                 seed.AddCategories();
                 seed.AddCommune();
-                //seed.AddPi();
+                seed.AddPi();
                 
             }
             

@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Isen.DotNet.Library.Models.Implementation;
 using Isen.DotNet.Library.Repositories.Interfaces;
+using Isen.DotNet.Library.Utilities;
 using Microsoft.Extensions.Logging;
-using System.Reflection.Emit.AssemblyBuilder;
+using System.Reflection;
+using System.IO;
+using System.Data;
+using System.Web;
+using System.Text;
+using CsvHelper;
+using System.Configuration;
 
 namespace Isen.DotNet.Library.Data
 {
@@ -46,12 +53,12 @@ namespace Isen.DotNet.Library.Data
             _logger.LogWarning($"Database was {not}created.");
         }
 
-      /*  public void AddPi()
+        public void AddPi()
         {
             if (_piRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding PI");
 
-            var pi = new List<pointDinteret>
+          /*  var pi = new List<pointDinteret>
             {
                 new pointDinteret {Id = 1, Name = "KFC Toulon Liberté", Descriptif="Place ou on vend de la nourriture", Categorie=_categorieRepository.Single("Restauration") , Adresse = _adresseRepository.Single(1)},
                 new pointDinteret {Id=2, Name="Isen Toulon", Descriptif="Référence en terme de formation d'ingénieurs", Categorie=_categorieRepository.Single("Lieu Touristique"), Adresse = _adresseRepository.Single(2)}
@@ -59,7 +66,30 @@ namespace Isen.DotNet.Library.Data
             _piRepository.UpdateRange(pi);
             _piRepository.Save();
 
-            _logger.LogWarning("Added PI");
+            _logger.LogWarning("Added PI");*/
+            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\PointDInteret.csv";
+            using (var sr = new StreamReader(path) ) 
+            {
+                var reader = new CsvReader(sr);
+                reader.Configuration.MissingFieldFound = null;
+                reader.Configuration.RegisterClassMap<PiMap>();
+                reader.Read();
+                reader.ReadHeader();
+                IEnumerable<pointDinteret> points = reader.GetRecords<pointDinteret>();
+
+                _piRepository.UpdateRange(points);
+                _piRepository.Save();
+            }
+            List<pointDinteret> pi = new List<pointDinteret>();
+            
+            
+            
+            
+            _logger.LogWarning("Addeed Point d'Intérêt");
+            
+            
+            
+            
         }
 
         public void AddCommune()
@@ -141,8 +171,6 @@ namespace Isen.DotNet.Library.Data
                     }
             }; 
             
-        }*/
-
-        Assembly assembly = Ass
+        }
     }
 }
