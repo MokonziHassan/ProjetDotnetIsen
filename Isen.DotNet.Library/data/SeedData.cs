@@ -6,7 +6,7 @@ using Isen.DotNet.Library.Utilities;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using CsvHelper;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Isen.DotNet.Library.Data
 {
@@ -53,17 +53,17 @@ namespace Isen.DotNet.Library.Data
             if (_piRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding PI");
 
-          /*  var pi = new List<pointDinteret>
-            {
-                new pointDinteret {Id = 1, Name = "KFC Toulon Liberté", Descriptif="Place ou on vend de la nourriture", Categorie=_categorieRepository.Single("Restauration") , Adresse = _adresseRepository.Single(1)},
-                new pointDinteret {Id=2, Name="Isen Toulon", Descriptif="Référence en terme de formation d'ingénieurs", Categorie=_categorieRepository.Single("Lieu Touristique"), Adresse = _adresseRepository.Single(2)}
-            };
-            _piRepository.UpdateRange(pi);
-            _piRepository.Save();
+            /*  var pi = new List<pointDinteret>
+              {
+                  new pointDinteret {Id = 1, Name = "KFC Toulon Liberté", Descriptif="Place ou on vend de la nourriture", Categorie=_categorieRepository.Single("Restauration") , Adresse = _adresseRepository.Single(1)},
+                  new pointDinteret {Id=2, Name="Isen Toulon", Descriptif="Référence en terme de formation d'ingénieurs", Categorie=_categorieRepository.Single("Lieu Touristique"), Adresse = _adresseRepository.Single(2)}
+              };
+              _piRepository.UpdateRange(pi);
+              _piRepository.Save();
 
-            _logger.LogWarning("Added PI");*/
+              _logger.LogWarning("Added PI");*/
             string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\PointDInteret.csv";
-            using (var sr = new StreamReader(path) ) 
+            using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
                 reader.Configuration.MissingFieldFound = null;
@@ -76,55 +76,23 @@ namespace Isen.DotNet.Library.Data
                 _piRepository.Save();
             }
             List<pointDinteret> pi = new List<pointDinteret>();
-            
-            
-            
-            
+
+
+
+
             _logger.LogWarning("Addeed Point d'Intérêt");
-            
-            
-            
-            
+
+
+
+
         }
-
-        public void AddCommune()
-        {
-            if (_communeRepository.GetAll().Any()) return;
-            _logger.LogWarning("Adding Commune");
-
-            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\commune.csv";
-            using (var sr = new StreamReader(path) ) 
-            {
-                var reader = new CsvReader(sr);
-                try {
-                    reader.Configuration.MissingFieldFound = null;
-                    reader.Configuration.RegisterClassMap<CommuneMap>();
-                    reader.Read();
-                    reader.ReadHeader();
-                    IEnumerable<commune> communes = reader.GetRecords<commune>();
-
-                _communeRepository.UpdateRange(communes);
-                _communeRepository.Save();
-                }catch(System.Exception e)
-                {
-                    throw e;
-                    
-                }
-                
-            
-            }
-            
-
-            _logger.LogWarning("Added commune");
-        }
-
         public void AddCategories()
         {
             if (_categorieRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Categories");
 
             string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\Categorie.csv";
-            using (var sr = new StreamReader(path) ) 
+            using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
                 reader.Configuration.MissingFieldFound = null;
@@ -145,7 +113,7 @@ namespace Isen.DotNet.Library.Data
             if (_adresseRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Adresses");
             string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\departementCommune.csv";
-            using (var sr = new StreamReader(path) ) 
+            using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
                 reader.Configuration.MissingFieldFound = null;
@@ -157,7 +125,54 @@ namespace Isen.DotNet.Library.Data
                 _adresseRepository.UpdateRange(adresses);
                 _adresseRepository.Save();
             }
-            
+
+        }
+
+        public void AddCommune()
+        {
+            if(_communeRepository.GetAll().Any()) return;
+            _logger.LogInformation("Adding Communes");
+            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\Communes.csv";
+            using (var sr = new StreamReader(path))
+            {
+                var reader = new CsvReader(sr);
+                reader.Configuration.MissingFieldFound = null;
+                reader.Configuration.Delimiter = ";";
+                reader.Configuration.RegisterClassMap<CommuneMap>();
+                reader.Read();
+                reader.ReadHeader();
+                IEnumerable<commune> communes = reader.GetRecords<commune>();
+
+                
+                _communeRepository.UpdateRange(communes);
+                try{
+                    _communeRepository.Save();
+                }catch(DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        if(entry.Entity is commune )
+                        {
+                            var proposedValues = entry.CurrentValues;
+                            var databaseValues = entry.GetDatabaseValues();
+
+                            foreach (var property in proposedValues.Properties)
+                            {
+                                var proposedValue =  proposedValues[property];
+                                var databaseValue = databaseValues[property];
+                            }
+                            entry.OriginalValues.SetValues(databaseValues);
+                        }
+                        else{
+                            throw new System.NotSupportedException(
+                                "Don't know how to handle concurency conflicts for "
+                                + entry.Metadata.Name
+                            );
+                        }
+                    }
+                }
+                
+            }
         }
     }
 }

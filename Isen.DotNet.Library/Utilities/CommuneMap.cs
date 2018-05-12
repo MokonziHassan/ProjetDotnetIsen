@@ -2,6 +2,8 @@ using System;
 using Isen.DotNet.Library.Models.Implementation;
 using CsvHelper.Configuration;
 using CsvHelper;
+using CsvHelper.TypeConversion;
+using System.Globalization;
 
 namespace Isen.DotNet.Library.Utilities
 {
@@ -9,6 +11,7 @@ namespace Isen.DotNet.Library.Utilities
 {
     public CommuneMap()
     {
+        
         Map( m => m.Id );
         Map( m => m.Name );
         Map(m => m.Latitude);
@@ -16,5 +19,7 @@ namespace Isen.DotNet.Library.Utilities
         
     }
 }
+
+
 }
 

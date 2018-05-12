@@ -21,8 +21,8 @@ namespace Isen.DotNet.Library.Repositories.InMemory
                 {
                     _modelCollection = new List<commune>
                     {
-                        new commune {Id=1, Name="La Garde", Latitude=43.56F, Longitude=44.67F},
-                        new commune {Id=2, Name="La Valette", Latitude=48.87F, Longitude=49.90F }
+                        new commune {Id=1, Name="La Garde", Latitude="43.56", Longitude="44.67"},
+                        new commune {Id=2, Name="La Valette", Latitude="48.87", Longitude="49.90" }
                     };
                 }
                 return _modelCollection.AsQueryable();
