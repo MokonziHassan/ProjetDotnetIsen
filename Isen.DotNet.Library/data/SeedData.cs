@@ -62,7 +62,10 @@ namespace Isen.DotNet.Library.Data
               _piRepository.Save();
 
               _logger.LogWarning("Added PI");*/
-            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\PointDInteret.csv";
+              string fileName = "PointDInteret.csv";
+              string path1 = @"SeedData";
+              string path;
+              path = Path.GetFullPath(path1)+ "\\" + fileName;
             using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
@@ -90,8 +93,10 @@ namespace Isen.DotNet.Library.Data
         {
             if (_categorieRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Categories");
-
-            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\Categorie.csv";
+            string fileName = "Categorie.csv";
+            string path1 = @"SeedData";
+            string path;
+            path = Path.GetFullPath(path1) + "\\" + fileName;
             using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
@@ -112,7 +117,11 @@ namespace Isen.DotNet.Library.Data
         {
             if (_adresseRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Adresses");
-            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\departementCommune.csv";
+            string fileName = "departementCommune.csv";
+            string path1 = @"SeedData";
+            string path;
+
+            path = Path.GetFullPath(path1) + "\\" + fileName ;
             using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
@@ -132,7 +141,10 @@ namespace Isen.DotNet.Library.Data
         {
             if(_communeRepository.GetAll().Any()) return;
             _logger.LogInformation("Adding Communes");
-            string path = @"C:\Users\khass\ProjetIsenDotnet\Isen.DotNet.Library\data\SeedData\Communes.csv";
+            string fileName = "Communes.csv";
+            string path1 = @"SeedData";
+            string path;
+            path = Path.GetFullPath(path1) + "\\" + fileName ;
             using (var sr = new StreamReader(path))
             {
                 var reader = new CsvReader(sr);
