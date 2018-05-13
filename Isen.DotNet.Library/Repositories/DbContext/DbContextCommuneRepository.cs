@@ -18,7 +18,7 @@ namespace Isen.DotNet.Library.Repositories.DbContext
         ) : base(logger, context)
         {}
       
-
+        
     }
 
 }

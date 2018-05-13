@@ -17,8 +17,8 @@ namespace Isen.DotNet.Library.Models.Implementation
         public commune Commune {get; set;}
 
         
-        public float Latitude {get; set;}
-        public float Longitude {get; set;}
+        public string Latitude {get; set;}
+        public string Longitude {get; set;}
 
         public override dynamic ToDynamic()
         {

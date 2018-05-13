@@ -120,7 +120,7 @@ namespace Isen.DotNet.Library.Data
         {
             if (_adresseRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Adresses");
-            string fileName = "adressesPi.csv";
+            string fileName = "AdressesPoint.csv";
             string path1 = @"SeedData";
             string path;
 

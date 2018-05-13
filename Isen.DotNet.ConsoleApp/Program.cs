@@ -10,7 +10,7 @@ namespace Isen.DotNet.ConsoleApp
     {
         static void Main(string[] args)
         {
-            ICityRepository cityRepository = 
+          /*  ICityRepository cityRepository = 
                 new InMemoryCityRepository();
             IPersonRepository personRepository = 
                 new InMemoryPersonRepository(cityRepository);
@@ -51,7 +51,7 @@ namespace Isen.DotNet.ConsoleApp
                 person2.BirthDate.Value.AddYears(-100);
             personRepository.UpdateRange(jonDoe, person2);
             foreach(var p in personRepository.GetAll()) Console.WriteLine(p);
-            Console.WriteLine("- - - - - - - -");
+            Console.WriteLine("- - - - - - - -"); */
         }
     }
 }

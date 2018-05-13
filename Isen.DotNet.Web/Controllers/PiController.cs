@@ -14,11 +14,35 @@ namespace Isen.DotNet.Web.Controllers
 {
     public class PiController : BaseController<pointDinteret>
     {
+        private readonly IPiRepository _piRepository;
         public PiController(
             ILogger<PiController> logger,
             IPiRepository repository
-        ) : base(logger, repository){}
+        ) : base(logger, repository){
+            _piRepository = repository;
+        }
         
+        [HttpGet]
+        [Route("api/Pi/Categories/{id}")]
+        public JsonResult GetPiCategorie(int id)
+        {
+            var pi = _piRepository
+                    .GetAll()
+                    .Where(p => p.CategorieId == id)
+                    .ToList();
+            return Json(pi);
+        }
+        
+        [HttpGet]
+        [Route("api/Pi/Commune/{id}")]
+        public JsonResult GetPiCommune(int id)
+        {
+            var pi = _piRepository
+                    .GetAll()
+                    .Where(p => p.AdresseId == id)
+                    .ToList();
+            return Json(pi);
+        }
     }
 
     

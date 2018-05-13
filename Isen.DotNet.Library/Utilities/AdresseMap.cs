@@ -11,11 +11,11 @@ namespace Isen.DotNet.Library.Utilities
     {
         Map( m => m.Id );
         Map( m => m.LigneDeTexte );
-        Map(m => m.Commune).Name("Commune");
-        Map(m => m.CodePostal);
+        Map(m => m.Commune.Name).Name("Commune");
+        Map(m => m.CodePostal).Name("CodePostal");
         Map(m => m.Latitude);
         Map(m => m.Longitude);
-        Map(m => m.Code).Name("CodeInsee");
+        
         
     }
 }
