@@ -8,5 +8,6 @@ namespace Isen.DotNet.Library.Models.Implementation
     {
         public string Latitude {get; set;}
         public string Longitude {get; set;}
+        public int Code {get; set;}
     }
 }

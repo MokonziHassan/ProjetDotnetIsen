@@ -16,7 +16,7 @@ namespace Isen.DotNet.Library.Utilities
         Map( m => m.Name );
         Map(m => m.Latitude);
         Map(m => m.Longitude);
-        
+        Map(m => m.Code).Name("CodeInsee");
     }
 }
 

@@ -30,7 +30,7 @@ namespace Isen.DotNet.Library.Repositories.InMemory
                     {
                     Id=1, 
                     LigneDeTexte="282 Boulevard Léon Bourgois", 
-                    CodePostal = 83100
+                    CodePostal = "83100"
                     
                     
                     },
@@ -38,7 +38,7 @@ namespace Isen.DotNet.Library.Repositories.InMemory
                     {
                         Id = 2,
                         LigneDeTexte = "Maison du Numérique et de l'Innovation, Place Georges Pompidou",
-                        CodePostal = 83000
+                        CodePostal = "83000"
                     
                     }
                 };

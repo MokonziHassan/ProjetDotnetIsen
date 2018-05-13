@@ -120,7 +120,7 @@ namespace Isen.DotNet.Library.Data
         {
             if (_adresseRepository.GetAll().Any()) return;
             _logger.LogWarning("Adding Adresses");
-            string fileName = "departementCommune.csv";
+            string fileName = "adressesPi.csv";
             string path1 = @"SeedData";
             string path;
 
@@ -144,7 +144,7 @@ namespace Isen.DotNet.Library.Data
         {
             if(_departementRepository.GetAll().Any()) return;
             _logger.LogInformation("Ajout des départements");
-            string fileName = "departementPaca.csv";
+            string fileName = "departements.csv";
             string path1 = @"SeedData";
             string path;
             path = Path.GetFullPath(path1)+ "\\" + fileName;
@@ -165,7 +165,7 @@ namespace Isen.DotNet.Library.Data
         {
             if(_communeRepository.GetAll().Any()) return;
             _logger.LogInformation("Adding Communes");
-            string fileName = "Communes.csv";
+            string fileName = "CommunesPaca.csv";
             string path1 = @"SeedData";
             string path;
             path = Path.GetFullPath(path1) + "\\" + fileName ;
@@ -173,7 +173,7 @@ namespace Isen.DotNet.Library.Data
             {
                 var reader = new CsvReader(sr);
                 reader.Configuration.MissingFieldFound = null;
-                reader.Configuration.Delimiter = ";";
+                
                 reader.Configuration.RegisterClassMap<CommuneMap>();
                 reader.Read();
                 reader.ReadHeader();

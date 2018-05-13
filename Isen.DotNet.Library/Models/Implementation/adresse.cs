@@ -7,10 +7,12 @@ namespace Isen.DotNet.Library.Models.Implementation
     public class adresse : BaseModel
     {
         public string LigneDeTexte {get; set;}
-        public int CodePostal {get; set;}
+        public string CodePostal {get; set;}
         public List<commune> CommuneCollection {get; set;}
 
         public int? CommuneId {get; set;}
+
+        public int Code {get; set;}
 
         public commune Commune {get; set;}
 
