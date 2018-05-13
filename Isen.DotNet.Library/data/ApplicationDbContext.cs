@@ -11,6 +11,8 @@ namespace Isen.DotNet.Library.Data
         public DbSet<adresse> adresseCollection { get;set; }
         public DbSet<commune> communeCollection { get;set; }
 
+        public DbSet<departement> departementCollection {get; set;}
+
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options) 
             : base(options) { }

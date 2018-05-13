@@ -18,13 +18,15 @@ namespace Isen.DotNet.Library.Data
         private readonly ICommuneRepository _communeRepository;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IAdresseRepository _adresseRepository;
+        private readonly IDepartementRepository _departementRepository;
         public SeedData(
             ApplicationDbContext context,
             ILogger<SeedData> logger,
             IPiRepository piRepository,
             ICategorieRepository categorieRepository,
             IAdresseRepository adresseRepository,
-            ICommuneRepository communeRepository)
+            ICommuneRepository communeRepository,
+            IDepartementRepository departementRepository)
         {
             _context = context;
             _logger = logger;
@@ -32,6 +34,7 @@ namespace Isen.DotNet.Library.Data
             _categorieRepository = categorieRepository;
             _communeRepository = communeRepository;
             _adresseRepository = adresseRepository;
+            _departementRepository = departementRepository;
         }
 
         public void DropDatabase()
@@ -135,6 +138,27 @@ namespace Isen.DotNet.Library.Data
                 _adresseRepository.Save();
             }
 
+        }
+
+        public void AddDepartement()
+        {
+            if(_departementRepository.GetAll().Any()) return;
+            _logger.LogInformation("Ajout des départements");
+            string fileName = "departementPaca.csv";
+            string path1 = @"SeedData";
+            string path;
+            path = Path.GetFullPath(path1)+ "\\" + fileName;
+            using (var sr = new StreamReader(path))
+            {
+                var reader = new CsvReader(sr);
+                reader.Configuration.MissingFieldFound = null;
+                reader.Configuration.RegisterClassMap<DepartementMap>();
+                reader.Read();
+                reader.ReadHeader();
+                IEnumerable<departement> departements = reader.GetRecords<departement>();
+                _departementRepository.UpdateRange(departements);
+                _departementRepository.Save();
+            }
         }
 
         public void AddCommune()
